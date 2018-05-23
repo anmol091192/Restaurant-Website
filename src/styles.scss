@@ -32,7 +32,7 @@ body {
 }
 
 md-list-item {
-margin-top: 50px;
+margin-top: 70px;
 }
 
 .md-list-item-text{
@@ -52,4 +52,19 @@ line-height: 0.5;
 
 .flex-spacer {
   flex: 1 1 auto;
+}
+
+.md-avatar{
+ width: 50px;
+ height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    padding: 5px 0;
+
+}
+
+.over{
+height:40px;
+    line-height:15px;
+	overflow: visible;
 }
