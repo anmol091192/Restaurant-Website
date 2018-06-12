@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
 
   dishes: Dish[];
   errMess: string;
+    dish: Dish;
   
   	
   constructor(private dishService: DishService,
