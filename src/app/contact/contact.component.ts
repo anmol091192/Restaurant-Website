@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation'
+import { flyInOut ,visibility} from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -12,14 +13,20 @@ import { flyInOut } from '../animations/app.animation'
     'style': 'display: block;'
   },
   animations: [
-    flyInOut()
+    flyInOut(),
+    visibility()
   ]
 })
 export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackcopy = null;
   contactType = ContactType;
+  visibility = 'shown';
+  submitted= null;
+  feedback2 = null;
+
   formErrors = {
   	'firstname': '',
   	'lastname': '',
@@ -48,7 +55,7 @@ export class ContactComponent implements OnInit {
   	}
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private feedbackservice: FeedbackService) {
   this.createForm();
    }
 
@@ -90,7 +97,16 @@ export class ContactComponent implements OnInit {
 
   onSubmit(){
   	this.feedback = this.feedbackForm.value;
-  	console.log(this.feedback);
+  	this.feedbackservice.submitFeedback(this.feedback)
+  	.subscribe((feedback)=>{
+        this.feedback2=feedback;
+        this.submitted=false;
+        setTimeout(()=>{
+          
+          this.feedback2=null;
+          
+        },5000)
+      });
   	this.feedbackForm.reset({
   		firstname: '',
   		lastname: '',

@@ -16,12 +16,12 @@
                 <h4>Our Address</h4>
                 <address>
 		              121, Clear Water Bay Road<br>
-		              Clear Water Bay, Kowloon<br>
-		              HONG KONG<br>
-		              <i class="fa fa-phone"></i>: +852 1234 5678<br>
-		              <i class="fa fa-fax"></i>: +852 8765 4321<br>
+		              Clear Water Bay<br>
+		              California<br>
+		              <i class="fa fa-phone"></i>: (123) 456-789<br>
+		              <i class="fa fa-fax"></i>: (123) 456-789<br>
 		              <i class="fa fa-envelope"></i>: 
-                        <a href="mailto:confusion@food.net">confusion@food.net</a>
+                        <a href="/">example@abc.com</a>
 		           </address>
                <p></p>
                 <div>
@@ -37,9 +37,32 @@
       </div>
 
       <div fxFlex fxFlexOffset="20px" class="form-size">
-      	<H3>SEND US YOUR FEEDBACK</H3>
-      	<p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-      	<form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+      	<div [hidden]="!submitted" *ngIf="!feedback2">
+		<md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+		</div>
+		<div [hidden]="!submitted"  >
+      
+    <div fxFlex *ngIf="feedback2">
+      <h3>Your Submission</h3>
+      <md-list-item>
+        
+        <p md-line>First Name:&nbsp;{{ feedback.firstname }}</p>
+        
+        <p md-line>Last Name:&nbsp;{{ feedback.lastname }}</p>
+        
+        <p md-line>Tel. Number:&nbsp;{{ feedback.telnum }}</p>
+      
+        <p md-line>Email:&nbsp;{{ feedback.email }}</p>
+      
+        <p md-line>Contact Type:&nbsp;{{ feedback.contacttype }}</p>
+      
+        <p md-line>Message:&nbsp;{{ feedback.message }}</p> 
+        
+          </md-list-item>
+ 
+          </div>
+         </div>
+      	<form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [hidden]="submitted" *ngIf="!feedback2">
           <p>
             <md-input-container class="half-width"
              dividerColor="{{formErrors.firstname ? 'warn' : 'primary'}}">

@@ -6,6 +6,7 @@ import { Http, Response } from '@angular/http';
 
 import { baseURL } from '../shared/baseurl';
 import { ProcessHttpmsgService } from './process-httpmsg.service';
+import { RestangularModule, Restangular } from 'ngx-restangular';
 
 import{ Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -21,21 +22,19 @@ import 'rxjs/add/operator/delay';
 export class PromotionService {
 
   constructor(private http: Http,
-  private processHttpmsgService: ProcessHttpmsgService) { }
+  private processHttpmsgService: ProcessHttpmsgService,private restangular: Restangular) { }
 
   getPromotions(): Observable<Promotion[]> {
-    return this.http.get(baseURL + 'promotions')
-                    .map(res => { return this.processHttpmsgService.extractData(res); });
+    return this.restangular.all('promotions').getList();
   }
 
   getPromotion(id: number): Observable<Promotion>{
-return  this.http.get(baseURL + 'promotions/'+ id)
-                    .map(res => { return this.processHttpmsgService.extractData(res); });
+return  this.restangular.one('promotions',id).get();
   }
 
   getFeaturedPromotion(): Observable<Promotion>{
-return this.http.get(baseURL + 'promotions?featured=true')
-                    .map(res => { return this.processHttpmsgService.extractData(res)[0]; });
+return this.restangular.all('promotions').getList({featured: true})
+.map(promotions => promotions[0]);
   }
 
 }
